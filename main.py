@@ -1,4 +1,4 @@
-from presentation.menu1 import Menu
+from presentation.menu import Menu
 
-menu1 = Menu()
-menu1.show()
+menu= Menu()
+menu.show()

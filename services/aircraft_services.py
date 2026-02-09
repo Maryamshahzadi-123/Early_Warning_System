@@ -1,8 +1,10 @@
 class AircraftService:
 
+    # def __init__(self):
+    #     self.aircrafts = []
     def __init__(self):
-        self.aircrafts = []
-
+       self.aircrafts = []
+       self.scanning = True
     def add_aircraft(self, aircraft):
         self.aircrafts.append(aircraft)
 
