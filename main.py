@@ -1,10 +1,10 @@
 from services.data_simulation import DataSimulation
-#F3
-from presentation.menu import Menu
+from presentation.menu import Menu # F3
 
-menu= Menu()
-menu.show()
-#F3
-if __name__ == "__main__":
-    DataSimulation().run()
+if __name__ == "__main__":   #F3
+    DataSimulation().run()   #F3
+    menu= Menu()
+    menu.show()
+
+
 

@@ -20,4 +20,10 @@ class DataSimulation:
 
     def run(self):
         for aircraft in self.aircraft_data:
-            self.aircraft_service.detect(aircraft)
+            self.aircraft_service.process_aircraft(aircraft)
+            
+            
+            
+           
+   
+            

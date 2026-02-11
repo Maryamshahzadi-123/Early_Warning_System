@@ -1,4 +1,4 @@
-from entities.airspace import airspace
+from entities.airspace import Airspace
 
 
 class AircraftService:
@@ -6,7 +6,7 @@ class AircraftService:
     def __init__(self):
         self.aircrafts = []
         self.scanning = True
-        self.airspace = airspace()
+        self.airspace = Airspace()
         self.detected = []
         self.friendly_ids = ["AC001", "AC003", "AC006", "AC008", "AC010"] #F4
 
@@ -27,18 +27,39 @@ class AircraftService:
                 return ac.position, getattr(ac, "movement", None)
         return None
 
-
+    def process_aircraft(self, aircraft):
+        self.detect(aircraft)
 #F3
     def detect(self, aircraft):
         if self.airspace.is_inside(aircraft["position"]):
             if aircraft["id"] not in self.detected:
                 self.detected.append(aircraft["id"])
                 status = self.recognize_aircraft(aircraft)
+#F7
                 print(f"  Aircraft {aircraft['id']} , Type: {aircraft['type'].upper()} , Status: {status}")
+                if status == "UNKNOWN":
+                    self.raise_alert(aircraft)
 
-#F4
+    
+    def raise_alert(self, aircraft):
+        
+         print(f"     ALERT: Unknown aircraft detected at position {aircraft['position']} {aircraft['id']} ")
+
+# F4 + F6
     def recognize_aircraft(self, aircraft):
         if aircraft["id"] in self.friendly_ids:
-            return "FRIENDLY"
+            return "FRIENDLY"         # F4
+        elif self.airspace.is_inside(aircraft["position"]):
+            return "UNKNOWN"          # F6
         else:
-            return "NOT FRIENDLY"
+            return "NOT FRIENDLY"     
+        
+        
+
+        
+       
+
+
+      
+
+
