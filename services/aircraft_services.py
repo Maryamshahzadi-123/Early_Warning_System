@@ -8,6 +8,7 @@ class AircraftService:
         self.scanning = True
         self.airspace = airspace()
         self.detected = []
+        self.friendly_ids = ["AC001", "AC003", "AC006", "AC008", "AC010"] #F4
 
     def add_aircraft(self, aircraft):
         self.aircrafts.append(aircraft)
@@ -32,7 +33,12 @@ class AircraftService:
         if self.airspace.is_inside(aircraft["position"]):
             if aircraft["id"] not in self.detected:
                 self.detected.append(aircraft["id"])
-                print(f"Aircraft {aircraft['id']} ({aircraft['type']})  Entered Airspace")
+                status = self.recognize_aircraft(aircraft)
+                print(f"  Aircraft {aircraft['id']} , Type: {aircraft['type'].upper()} , Status: {status}")
 
-           
-           
+#F4
+    def recognize_aircraft(self, aircraft):
+        if aircraft["id"] in self.friendly_ids:
+            return "FRIENDLY"
+        else:
+            return "NOT FRIENDLY"
