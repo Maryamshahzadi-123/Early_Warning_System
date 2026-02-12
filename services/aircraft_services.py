@@ -29,7 +29,7 @@ class AircraftService:
 
     def process_aircraft(self, aircraft):
         self.detect(aircraft)
-#F3
+#F3 
     def detect(self, aircraft):
         if self.airspace.is_inside(aircraft["position"]):
             if aircraft["id"] not in self.detected:
@@ -44,7 +44,8 @@ class AircraftService:
     def raise_alert(self, aircraft):
         #F8 (location ,speed)
          print(f"     ALERT: Unknown aircraft detected at position {aircraft['position']}  iD: {aircraft['id']}   DIRECTION:  {aircraft['direction']} at {aircraft['speed']} km/h")
-
+         
+        
 # F4 + F6
     def recognize_aircraft(self, aircraft):
         if aircraft["id"] in self.friendly_ids:

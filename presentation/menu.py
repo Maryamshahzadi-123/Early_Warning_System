@@ -53,12 +53,7 @@ class Menu:
         while self.scanning:
             time.sleep(10)   # radar scans  after every 10 seconds
            
-            aircraft = {  # fake aircraft generate
-                "id": f"AC-{random.randint(100, 999)}",
-                "altitude": random.randint(1000, 40000)
-            }
-            self.aircrafts.append(aircraft)
-            print(f"[RADAR] Aircraft detected: {aircraft['id']}")
+      
     
 
 
