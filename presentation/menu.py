@@ -1,9 +1,9 @@
 from services.aircraft_services import AircraftService
-import threading, time, random
+import threading, time
 class Menu:
     def __init__(self, aircraft_service=None):
         if aircraft_service is None:
-            aircraft_service = AircraftService() #object
+            aircraft_service = AircraftService() 
         self.aircraft_service = aircraft_service
         self.aircrafts = []     
         self.scanning = True     
