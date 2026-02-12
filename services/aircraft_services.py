@@ -42,8 +42,8 @@ class AircraftService:
 
     
     def raise_alert(self, aircraft):
-        
-         print(f"     ALERT: Unknown aircraft detected at position {aircraft['position']} {aircraft['id']} ")
+        #F8 (location ,speed)
+         print(f"     ALERT: Unknown aircraft detected at position {aircraft['position']}  iD: {aircraft['id']}   DIRECTION:  {aircraft['direction']} at {aircraft['speed']} km/h")
 
 # F4 + F6
     def recognize_aircraft(self, aircraft):
@@ -53,6 +53,9 @@ class AircraftService:
             return "UNKNOWN"          # F6
         else:
             return "NOT FRIENDLY"     
+
+
+
         
         
 

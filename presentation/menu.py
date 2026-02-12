@@ -3,10 +3,10 @@ import threading, time, random
 class Menu:
     def __init__(self, aircraft_service=None):
         if aircraft_service is None:
-            aircraft_service = AircraftService()
+            aircraft_service = AircraftService() #object
         self.aircraft_service = aircraft_service
-        self.aircrafts = []      # Add this
-        self.scanning = True     # Add this too
+        self.aircrafts = []     
+        self.scanning = True     
             
   
     def show(self):
@@ -36,7 +36,6 @@ class Menu:
             input("Press Enter:")
             return
         input("Press Enter:")
-        
         for aircraft in aircrafts:
          print(aircraft)
 
@@ -58,7 +57,6 @@ class Menu:
                 "id": f"AC-{random.randint(100, 999)}",
                 "altitude": random.randint(1000, 40000)
             }
-
             self.aircrafts.append(aircraft)
             print(f"[RADAR] Aircraft detected: {aircraft['id']}")
     
