@@ -1,10 +1,14 @@
-# # entities/airspace.py
-# class Airspace:
-#     def __init__(self):
-#         self.aircrafts = []  # airspace me jo aircrafts hain
+class Airspace:
+    def __init__(self):
+        self.aircraft = []  # airspace me jo aircraft hain
 
-#     def add_aircraft(self, aircraft):
-#         self.aircrafts.append(aircraft)
+    def add_aircraft(self, aircraft):
+        self.aircraft.append(aircraft)
 
-#     def get_all_aircrafts(self):
-#         return self.aircrafts
+    def get_all_aircraft(self):
+        return self.aircraft
+    
+    
+ 
+
+
