@@ -1,6 +1,6 @@
 class Airspace:
     def __init__(self):
-        self.aircraft = []  # airspace me jo aircraft hain
+        self.aircraft = []  
 
     def add_aircraft(self, aircraft):
         self.aircraft.append(aircraft)

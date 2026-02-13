@@ -1,8 +1,10 @@
 from services.aircraft_services import AircraftService
 
 class DataSimulation:
-    def __init__(self):
-        self.aircraft_service = AircraftService()
+    def __init__(self, aircraft_service=None):
+        if aircraft_service is None:
+            aircraft_service = AircraftService()
+        self.aircraft_service = aircraft_service
 
         #dummy data (10 aircraft)
         self.aircraft_data = [
