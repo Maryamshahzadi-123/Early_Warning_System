@@ -35,8 +35,8 @@ class AircraftService:
             if aircraft["id"] not in self.detected:
                 self.detected.append(aircraft["id"])
                 status = self.recognize_aircraft(aircraft)
-                #F7
-                print(f"  Aircraft {aircraft['id']} , Type: {aircraft['type'].upper()} , Status: {status}")
+#F7
+                print(f"  Aircraft {aircraft['id']} , Type: {aircraft['type'].upper()} , Status: {status} , Quadrant: {self.get_quadrant(aircraft['position'])}")
                 if status == "UNKNOWN":
                     self.raise_alert(aircraft)
 
@@ -44,6 +44,11 @@ class AircraftService:
     def raise_alert(self, aircraft):
         #F8 (location ,speed)
          print(f"     ALERT: Unknown aircraft detected at position {aircraft['position']}  iD: {aircraft['id']}   DIRECTION:  {aircraft['direction']} at {aircraft['speed']} ")
+         
+         # extra
+         quadrant = self.get_quadrant(aircraft["position"])
+         print(f"Quadrant: {quadrant}")
+
          
 # F4 + F6
     def recognize_aircraft(self, aircraft):
@@ -54,6 +59,25 @@ class AircraftService:
         else:
             return "NOT FRIENDLY"    
         
+        
+    def get_quadrant(self, position):
+        x = position["x"]
+        y = position["y"]
+
+        if x >= 50 and y >= 50: #Point (50,50) imagine at center
+            return "Quadrant 1"
+        elif x < 50 and y >= 50:
+            return "Quadrant 2"
+        elif x < 50 and y < 50:
+            return "Quadrant 3"
+        else:
+            return "Quadrant 4"
+        
+        
+        
+        
+
+
         
         
         

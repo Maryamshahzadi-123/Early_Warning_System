@@ -41,8 +41,7 @@ class Menu:
     #F1
     def view_airspace(self):
         if self.simulation:
-            self.aircraft_service.detected
-            self.simulation.run()
+           self.simulation.run()
         input("Press Enter:")
   
 
