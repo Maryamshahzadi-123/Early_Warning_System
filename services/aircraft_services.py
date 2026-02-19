@@ -20,59 +20,82 @@ class AircraftService:
                     return "Friendly"
                 return "Unknown"
         return "Not Found"
+    
 
     def track_aircraft(self, aircraft_id):
         for ac in self.aircraft:
             if ac.aircraft_id == aircraft_id:
                 return ac.position, getattr(ac, "movement", None)
         return None
-
+    
     def process_aircraft(self, aircraft):
         self.detect(aircraft)
-#F3 
+#F3              
     def detect(self, aircraft):
         if self.airspace.is_inside(aircraft["position"]):
             if aircraft["id"] not in self.detected:
                 self.detected.append(aircraft["id"])
-                status = self.recognize_aircraft(aircraft)
-#F7
-                print(f"  Aircraft {aircraft['id']} , Type: {aircraft['type'].upper()} , Status: {status} , Quadrant: {self.get_quadrant(aircraft['position'])}")
-                if status == "UNKNOWN":
-                    self.raise_alert(aircraft)
+            status = self.recognize_aircraft(aircraft)
+            #F7
+            print(f"  Aircraft {aircraft['id']} , Type: {aircraft['type'].upper()} , Status: {status} , Position: ({aircraft['position']['x']}, {aircraft['position']['y']}) , Direction: {aircraft['direction']}")
+            if status == "Unknown":
+                self.raise_alert(aircraft)
 
     
     def raise_alert(self, aircraft):
         #F8 (location ,speed)
-         print(f"     ALERT: Unknown aircraft detected at position {aircraft['position']}  iD: {aircraft['id']}   DIRECTION:  {aircraft['direction']} at {aircraft['speed']} ")
-         
-         # extra
-         quadrant = self.get_quadrant(aircraft["position"])
-         print(f"Quadrant: {quadrant}")
-
-         
+        print(f"     ALERT: Unknown aircraft detected at position ({aircraft['position']['x']}, {aircraft['position']['y']})  iD: {aircraft['id']}   DIRECTION:  {aircraft['direction']} at {aircraft['speed']}")
+               
+          
+    def update_position(self, aircraft_data, aircraft_id, new_x, new_y):
+        for aircraft in aircraft_data:
+            if aircraft["id"] == aircraft_id:
+                old_x = aircraft["position"]["x"]
+                old_y = aircraft["position"]["y"]
+                dx = new_x - old_x
+                dy = new_y - old_y
+                if dx > 0 and dy > 0:
+                    new_direction = "North-East"
+                elif dx < 0 and dy > 0:
+                    new_direction = "North-West"
+                elif dx > 0 and dy < 0:
+                    new_direction = "South-East"
+                elif dx < 0 and dy < 0:
+                    new_direction = "South-West"
+                elif dx > 0:
+                    new_direction = "East"
+                elif dx < 0:
+                    new_direction = "West"
+                elif dy > 0:
+                    new_direction = "North"
+                elif dy < 0:
+                    new_direction = "South"
+                else:
+                    new_direction = aircraft["direction"]
+                aircraft["position"]["x"] = new_x
+                aircraft["position"]["y"] = new_y
+                aircraft["direction"] = new_direction
+                if aircraft_id in self.detected:
+                    self.detected.remove(aircraft_id)
+                print(f"  Aircraft {aircraft_id} position updated: ({old_x}, {old_y}) to ({new_x}, {new_y}) , New Direction: {new_direction}")
+                return True
+        return False
+        
 # F4 + F6
     def recognize_aircraft(self, aircraft):
         if aircraft["id"] in self.friendly_ids:
-            return "FRIENDLY"         # F4
+            return "Friendly"         # F4
         elif self.airspace.is_inside(aircraft["position"]):
-            return "UNKNOWN"          # F6
+            return "Unknown"          # F6
         else:
-            return "NOT FRIENDLY"    
+            return "not friendly"    
         
         
-    def get_quadrant(self, position):
-        x = position["x"]
-        y = position["y"]
-
-        if x >= 50 and y >= 50: #Point (50,50) imagine at center
-            return "Quadrant 1"
-        elif x < 50 and y >= 50:
-            return "Quadrant 2"
-        elif x < 50 and y < 50:
-            return "Quadrant 3"
-        else:
-            return "Quadrant 4"
         
+       
+        
+        
+   
         
         
         

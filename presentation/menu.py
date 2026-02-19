@@ -27,22 +27,49 @@ class Menu:
             if choice == "1":
                 self.view_airspace()
             elif choice == "2":
+                self.update_aircraft_position()
+            elif choice == "3":
                 print("Exiting the system")
                 break
             else:
                 print("Invalid option")
-                
+
 
     def show_main_menu(self):
-        print("1 : view nearby airspace")
-        print("2 : Exit")
+        print("1 : View nearby airspace")
+        print("2 : Update aircraft position")
+        print("3 : Exit")
         return input("select option :")
 
     #F1
     def view_airspace(self):
         if self.simulation:
+           self.aircraft_service.detected = []
            self.simulation.run()
         input("Press Enter:")
+  
+
+    def update_aircraft_position(self):
+        if not self.simulation:
+            print(" no simulation data available")
+            input("press enter")
+            return
+        print("  Available IDs: AC001, AC002, AC003, AC004, AC005, AC006, AC007, AC008, AC009, AC010")
+        aircraft_id = input("enter aircraft id: ").strip().upper()
+        try:
+            new_x = int(input("enter new x position: "))
+            new_y = int(input("enter new y position: "))
+        except ValueError:
+            print(" Invalid position")  
+            input("press enter:")
+            return
+        found = self.aircraft_service .update_position(self.simulation.aircraft_data, aircraft_id ,new_x, new_y)
+        if not found:
+            print(" Aircraft not found")
+        input("press enter")
+            
+                
+             
   
 
     #F2

@@ -24,7 +24,7 @@ class DataSimulation:
         for aircraft in self.aircraft_data:
             self.aircraft_service.process_aircraft(aircraft)
             
-         
+   
          
          
         
