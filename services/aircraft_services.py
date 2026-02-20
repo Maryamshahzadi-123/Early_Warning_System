@@ -89,8 +89,10 @@ class AircraftService:
             return "Unknown"          # F6
         else:
             return "not friendly"    
-        
-        
+            
+            
+            
+            
         
        
         
