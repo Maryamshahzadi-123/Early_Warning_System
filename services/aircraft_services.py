@@ -25,35 +25,50 @@ class AircraftService:
 
     def update_position(self, aircraft_data, aircraft_id, new_x, new_y):
         for aircraft in aircraft_data:
-            if aircraft["id"] == aircraft_id:
-                old_x = aircraft["position"]["x"]
-                old_y = aircraft["position"]["y"]
-                dx = new_x - old_x
-                dy = new_y - old_y
-                if dx > 0 and dy > 0:
-                    new_direction = "North-East"
-                elif dx < 0 and dy > 0:
-                    new_direction = "North-West"
-                elif dx > 0 and dy < 0:
-                    new_direction = "South-East"
-                elif dx < 0 and dy < 0:
-                    new_direction = "South-West"
-                elif dx > 0:
-                    new_direction = "East"
-                elif dx < 0:
-                    new_direction = "West"
-                elif dy > 0:
-                    new_direction = "North"
-                elif dy < 0:
-                    new_direction = "South"
+            # Handle both Aircraft objects and dictionaries
+            if hasattr(aircraft, 'id'):
+                current_id = aircraft.id
+            else:
+                current_id = aircraft["id"]
+                
+            if current_id == aircraft_id:
+                if hasattr(aircraft, 'update_position'):
+                    result = aircraft.update_position(new_x, new_y)
                 else:
-                    new_direction = aircraft["direction"]
-                aircraft["position"]["x"] = new_x
-                aircraft["position"]["y"] = new_y
-                aircraft["direction"] = new_direction
+                    old_x = aircraft["position"]["x"]
+                    old_y = aircraft["position"]["y"]
+                    dx = new_x - old_x
+                    dy = new_y - old_y
+                    if dx > 0 and dy > 0:
+                        new_direction = "North-East"
+                    elif dx < 0 and dy > 0:
+                        new_direction = "North-West"
+                    elif dx > 0 and dy < 0:
+                        new_direction = "South-East"
+                    elif dx < 0 and dy < 0:
+                        new_direction = "South-West"
+                    elif dx > 0:
+                        new_direction = "East"
+                    elif dx < 0:
+                        new_direction = "West"
+                    elif dy > 0:
+                        new_direction = "North"
+                    elif dy < 0:
+                        new_direction = "South"
+                    else:
+                        new_direction = aircraft["direction"]
+                    aircraft["position"]["x"] = new_x
+                    aircraft["position"]["y"] = new_y
+                    aircraft["direction"] = new_direction
+                    result = {
+                        "old_position": {"x": old_x, "y": old_y},
+                        "new_position": {"x": new_x, "y": new_y},
+                        "direction": new_direction
+                    }
+                    
                 if aircraft_id in self.detected:
                     self.detected.remove(aircraft_id)
-                print(f"  Aircraft {aircraft_id} position updated: ({old_x}, {old_y}) to ({new_x}, {new_y}) , New Direction: {new_direction}")
+                print(f"  Aircraft {aircraft_id} position updated: ({result['old_position']['x']}, {result['old_position']['y']}) to ({result['new_position']['x']}, {result['new_position']['y']}) , New Direction: {result['direction']}")
                 return True
         return False
 

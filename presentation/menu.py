@@ -28,13 +28,12 @@ class Menu:
         print("3 : Exit")
         return input("select option :")
 
-    #F1
     def view_airspace(self):
         if self.simulation:
            self.aircraft_service.detected = []
            self.simulation.run()
         input("Press Enter:")
-  
+
 
     def update_aircraft_position(self):
         if not self.simulation:
@@ -47,7 +46,7 @@ class Menu:
             new_x = int(input("enter new x position: "))
             new_y = int(input("enter new y position: "))
         except ValueError:
-            print(" Invalid position")  
+            print(" Invalid position")
             input("press enter:")
             return
         found = self.aircraft_service.update_position(self.simulation.aircraft_data, aircraft_id, new_x, new_y)
