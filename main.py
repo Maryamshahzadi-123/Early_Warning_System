@@ -51,11 +51,6 @@ def add_aircraft(data: AircraftCreate):
     )
 
     aircraft_dict = new_aircraft.to_dict()
-
-    # Save in local database
     aircraft_db[data.id] = aircraft_dict
-
-    # Optional: send to service layer if needed
-    aircraft_service.process_aircraft(aircraft_dict)
 
     return aircraft_dict
