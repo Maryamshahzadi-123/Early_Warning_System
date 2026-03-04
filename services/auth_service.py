@@ -1,10 +1,13 @@
 from data_layer.db_context import DbContext
 from entities.user import User
+from typing import Optional
 
 
 class AuthService:
-    @staticmethod
-    def get_user(email: str) -> User | None:
+    def __init__(self, db_context: DbContext):
+        self.db_context = db_context
+
+    def get_user(self, email: str) -> Optional[User]:
         for user in DbContext.users:
             if user.email == email:
                 return user

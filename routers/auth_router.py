@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException
 from schemas.auth_schema import LoginRequest, LoginResponse
 from services.auth_service import AuthService
+from data_layer.db_context import DbContext
 
 router = APIRouter()
-auth_service = AuthService()
 
+auth_service = AuthService(DbContext())
 
 @router.post("/login", response_model=LoginResponse)
 def login(request: LoginRequest):
@@ -14,3 +15,9 @@ def login(request: LoginRequest):
         raise HTTPException(status_code=401, detail=str(e))
 
     return LoginResponse(success=True, message="Login successful")
+
+
+
+
+
+
