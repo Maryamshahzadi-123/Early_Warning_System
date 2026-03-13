@@ -4,14 +4,8 @@ from typing import Optional
 
 
 class AuthService:
-    def __init__(self, db_context: DbContext):
-        self.db_context = db_context
-
     def get_user(self, email: str) -> Optional[User]:
-        for user in DbContext.users:
-            if user.email == email:
-                return user
-        return None
+        return DbContext.get_user_by_email(email)
 
     def login(self, email: str, password: str) -> None:
         user = self.get_user(email)

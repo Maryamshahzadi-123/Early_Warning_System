@@ -1,14 +1,29 @@
 from entities.user import User
-from entities.aircraft import Aircraft
+from typing import Optional
 
 
 class DbContext:
-    users: list[User] = [
-        User(id=1, email="hy@example.com", password="password123"),
+    _users: list[User] = [
+        User(id=1, email=" hy@example.com", password="password123"),
         User(id=2, email="hi@example.com", password="secret456"),
     ]
+    _entered_drones: set[str] = set()
 
-    aircraft: list[Aircraft] = [
-        Aircraft(id=1, tail_number="N12345", model="Boeing 737", manufacturer="Boeing", year=2020),
-        Aircraft(id=2, tail_number="N67890", model="Airbus A320", manufacturer="Airbus", year=2021),
-    ]
+    @staticmethod
+    def get_all_users() -> list[User]:
+        return DbContext._users.copy()
+
+    @staticmethod
+    def get_user_by_email(email: str) -> Optional[User]:
+        for user in DbContext._users:
+            if user.email == email:
+                return user
+        return None
+
+    @staticmethod
+    def get_entered_drones() -> set[str]:
+        return DbContext._entered_drones.copy()
+
+    @staticmethod
+    def add_entered_drone(drone_id: str) -> None:
+        DbContext._entered_drones.add(drone_id)
