@@ -4,14 +4,17 @@ from typing import Optional
 
 
 class AuthService:
+    def __init__(self, db_context: DbContext):
+        self.db_context = db_context
+
     def get_user(self, email: str) -> Optional[User]:
-        return DbContext.get_user_by_email(email)
+        return self.db_context.get_user_by_email(email)
 
     def login(self, email: str, password: str) -> None:
         user = self.get_user(email)
 
         if user is None:
-            raise ValueError("User not found with this email")
+            raise ValueError("User not found")
 
         if user.password != password:
             raise ValueError("Incorrect password")

@@ -3,27 +3,24 @@ from typing import Optional
 
 
 class DbContext:
-    _users: list[User] = [
-        User(id=1, email=" hy@example.com", password="password123"),
-        User(id=2, email="hi@example.com", password="secret456"),
-    ]
-    _entered_drones: set[str] = set()
+    def __init__(self):
+        self._users: list[User] = [
+            User(id=1, email="hy@example.com", password="password123"),
+            User(id=2, email="hi@example.com", password="secret456"),
+        ]
+        self._entered_drones: set[str] = set()
 
-    @staticmethod
-    def get_all_users() -> list[User]:
-        return DbContext._users.copy()
+    def get_all_users(self) -> list[User]:
+        return self._users.copy()
 
-    @staticmethod
-    def get_user_by_email(email: str) -> Optional[User]:
-        for user in DbContext._users:
+    def get_user_by_email(self, email: str) -> Optional[User]:
+        for user in self._users:
             if user.email == email:
                 return user
         return None
 
-    @staticmethod
-    def get_entered_drones() -> set[str]:
-        return DbContext._entered_drones.copy()
+    def get_entered_drones(self) -> set[str]:
+        return self._entered_drones.copy()
 
-    @staticmethod
-    def add_entered_drone(drone_id: str) -> None:
-        DbContext._entered_drones.add(drone_id)
+    def add_entered_drone(self, drone_id: str) -> None:
+        self._entered_drones.add(drone_id)
