@@ -1,10 +1,14 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
-class RadarEntryRequest(BaseModel):
+class StartTrackingRequest(BaseModel):
     drone_id: str
-    latitude: float = Field(ge=-90, le=90)
-    longitude: float = Field(ge=-180, le=180)
+
+
+class UpdateLocationRequest(BaseModel):
+    drone_id: str
+    latitude: float
+    longitude: float
 
 
 class RadarMessage(BaseModel):
@@ -12,11 +16,13 @@ class RadarMessage(BaseModel):
     drone_id: str
 
 
-class RadarExitRequest(BaseModel):
+class StopTrackingRequest(BaseModel):
     drone_id: str
 
 
-class RadarUpdateRequest(BaseModel):
+class DroneLocationResponse(BaseModel):
     drone_id: str
-    latitude: float = Field(ge=-90, le=90)
-    longitude: float = Field(ge=-180, le=180)
+    latitude: float
+    longitude: float
+    status: str
+    last_updated: str
